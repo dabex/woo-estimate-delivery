@@ -76,7 +76,7 @@ class Woo_Estimate_Delivery_Admin {
 	public function action_links( $links, $file ){
 
 		if ( 'woo-estimate-delivery/estimate-delivery.php' == $file ) {
-			$links[] = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=estimate-delivery&section' ) . '">' . esc_html__( 'Setari', 'woo-estimate-delivery' ) . '</a>';
+			$links[] = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=estimate_delivery&section' ) . '">' . esc_html__( 'Setari', 'woo-estimate-delivery' ) . '</a>';
 		}
 
 		return $links;
