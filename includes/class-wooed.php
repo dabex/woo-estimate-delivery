@@ -38,11 +38,14 @@ class Woo_Estimate_Delivery {
 	}
 	private function betterwoo_public_hooks() {
 		$edd_public = new Woo_Estimate_Delivery_Public();
-		if(get_option( 'edd_settings[show_delivery_in_cart]') == 'yes' ) {
+		$options = get_option( 'edd_settings', array() );
+		$show_in_cart = $options['show_delivery_in_cart'];
+		$product_pos = $options['single_product_position'];
+		if($show_in_cart == 'yes' ) {
 		$this->loader->add_filter( 'woocommerce_get_item_data', $edd_public, 'edd_on_cart_and_checkout', 10, 2 );
 		}
 		$this->loader->add_filter( 'woocommerce_available_variation', $edd_public, 'betterwoo_add_variations_data' );
-		$this->loader->add_filter( get_option( 'edd_settings[single_product_position]'), $edd_public, 'show_delivery_date_single_product', 6 );	
+		$this->loader->add_filter( $product_pos, $edd_public, 'show_delivery_date_single_product', 6 );	
 	}
 	public function run() {
 		$this->loader->run();
