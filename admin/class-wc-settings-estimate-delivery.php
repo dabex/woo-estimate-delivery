@@ -5,40 +5,31 @@
  * @package WooCommerce/Admin
  * @version 2.4.0
  */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 if ( class_exists( 'Woo_Estimate_Delivery_Settings', false ) ) {
 	return new Woo_Estimate_Delivery_Settings();
 }
-
 /**
  * Woo_Estimate_Delivery_Settings.
  */
-class Woo_Estimate_Delivery_Settings extends WC_Settings_Page
-            {
-                public function __construct()
-                {
+class Woo_Estimate_Delivery_Settings extends WC_Settings_Page{
+                public function __construct(){
                     $this->id = 'estimate_delivery';
                     $this->label = esc_html__( 'Estimate Delivery', 'estimate_betterwoo' );
                     add_filter( 'woocommerce_settings_tabs_array', array( $this, 'add_settings_page' ), 20 );
                     add_action( 'woocommerce_settings_' . $this->id, array( $this, 'output' ) );
                     add_action( 'woocommerce_settings_save_' . $this->id, array( $this, 'save' ) );
                     add_action( 'woocommerce_sections_' . $this->id, array( $this, 'output_sections' ) );
-                }
-                
-                public function get_sections()
-                {
+                }                
+                public function get_sections(){
                     $sections = array(
                         '' => esc_html__( 'General Settings', 'estimate_betterwoo' ),
                     );
                     return apply_filters( 'woocommerce_get_sections_' . $this->id, $sections );
-                }
-                
-                public function get_settings( $current_section = '' )
-                {
+                }               
+                public function get_settings( $current_section = '' ){
                     if ( '' == $current_section ) {
                         $settings = apply_filters( 'estimate_betterwoo_settings', array(
                             array(
@@ -158,13 +149,14 @@ class Woo_Estimate_Delivery_Settings extends WC_Settings_Page
                                 'woocommerce_single_product_summary' => esc_html__( 'After Product Title', 'estimate_betterwoo' ),
                         ),
                             'desc_tip' => true,
+                            'default'  => 'woocommerce_after_add_to_cart_form'
                         ),
                             array(
                             'type'    => 'checkbox',
                             'id'      => 'edd_settings[show_delivery_in_cart]',
                             'name'    => esc_html__( 'Show Delivery Date in Cart/Checkout Page', 'estimate_betterwoo' ),
                             'desc'    => esc_html__( 'Enable if you want to show Delivery Date in Cart/Checkout Page', 'estimate_betterwoo' ),
-                            'default' => 'no',
+                            'default' => 'yes',
                         ),
                         
                             array(
@@ -195,39 +187,20 @@ class Woo_Estimate_Delivery_Settings extends WC_Settings_Page
                             'type' => 'sectionend',
                             'id'   => 'edd_title1',
                         )
-                        )
-                        
-                         );
-                        
+                        )                        
+                         );                       
                     }
                     return apply_filters( 'woocommerce_get_settings_' . $this->id, $settings, $current_section );
                 }
-                
-                /**
-                 * Output the settings
-                 *
-                 * @since 1.0
-                 */
-                public function output()
-                {
+                public function output(){
                     global  $current_section ;
                     $settings = $this->get_settings( $current_section );
                     WC_Admin_Settings::output_fields( $settings );
-                }
-                
-                /**
-                 * Save settings
-                 *
-                 * @since 1.0
-                 */
-                public function save()
-                {
+                }            
+                public function save(){
                     global  $current_section ;
                     $settings = $this->get_settings( $current_section );
                     WC_Admin_Settings::save_fields( $settings );
                 }
-                
-				
-            
             }
             return new Woo_Estimate_Delivery_Settings();
