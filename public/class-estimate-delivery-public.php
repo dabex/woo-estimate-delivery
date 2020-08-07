@@ -1,9 +1,5 @@
 <?php
- 
- class Woo_Estimate_Delivery_Public{
-	
-	public function __construct() {
-	}
+ class Woo_Estimate_Delivery_Public{	
 	public function edd_on_cart_and_checkout( $cart_item_data, $cart_item ){
 	    $options = get_option( 'edd_settings', array() );
 		$delivery_message = $options['delivery_message' ];
@@ -73,7 +69,6 @@
         }
     return $cart_item_data;
 	}
-	
 	public function show_delivery_date_single_product(){
 	    global $product;
 	    $options = get_option( 'edd_settings', array() );
@@ -110,12 +105,10 @@
                 }
             
             }
-   
         if ( $exclude_weekends == 'yes' && $delivery_global ) {
                 $estimate_delivery = date_i18n( $date_formatz, strtotime($today . ' + ' . $delivery_global . ' Weekday'));
                 $est1 = $delivery_global - 1;
                 $estimate1 = date_i18n( $date_formatz, strtotime($today . ' + ' . $est1 . ' Weekday'));
-                
             }
         if ( $exclude_weekends == 'no' && $next_day == 'yes') {
                 if ( current_time( 'G' ) < 24 && current_time( 'G' ) >= $closing_time ) {
@@ -131,24 +124,19 @@
                 $est1 = $delivery_global - 1;
                 $estimate_delivery = date_i18n( $date_formatz, strtotime($today . ' + ' . $est1 . ' day'));
             }
-        
         echo  '<div class="estimate-delivery">' ;
         echo  '<div class="text-del">' ;
         echo  '<span class="main-text-del"style="color:' . esc_attr($color) . '">' . esc_attr($delivery_message) . ': </span>' ;
-        
         if ( $daterange == 'yes' ) {
             echo  '<span class="del-text" style="color:' . esc_attr($datecolor) . '"><strong>' . esc_attr($estimate1) . ' - ' . esc_attr($estimate_delivery) . '<strong></span>' ;
         } else {
             echo  '<span class="del-text" style="color:' . esc_attr($datecolor) . '"><strong>' . esc_attr($estimate_delivery) . '<strong></span>' ;
         }
-        
         echo  '</div>' ;
-        echo  '</div>' ;
-                    
+        echo  '</div>' ;            
 	    } 
 	    }
-	public function betterwoo_add_variations_data( $variations )
-    {
+	public function betterwoo_add_variations_data( $variations ){
         $delivery_var = get_post_meta( $variations['variation_id'], 'delivery_date_var', true );
         $options = get_option( 'edd_settings', array() );
 	    $delivery_message = $options['delivery_message' ];
@@ -175,33 +163,28 @@
              $delivery_global = $delivery_var;   
             }
             if ( $exclude_weekends == 'yes' ) {
-
                     $estimate_delivery = date_i18n( $date_formatz, strtotime($today . ' + ' . $delivery_global . ' Weekday'));
                     $est1 = $delivery_global - 1;
                     $estimate1 = date_i18n( $date_formatz, strtotime($today . ' + ' . $est1 . ' Weekday'));
-                    
                     if ( $daterange == 'yes' ) {
                         $variations['delivery_variation'] = '<div class="estimate-delivery">' . '<div class="text-del">' . '<span class="main-text-del" style="color:' . esc_attr($color) . '">' . esc_attr($delivery_message) . ': </span>' . '<span class="del-text" style="color:' . esc_attr($datecolor) . '"><strong>' . esc_attr($estimate1) . ' - ' . $estimate_delivery . '<strong></span>' . '</div>' . '</div>';
                     } else {
                         $variations['delivery_variation'] = '<div class="estimate-delivery">' . '</div>' . '<div class="text-del">' . '<span class="main-text-del" style="color:' . esc_attr($color) . '">' . esc_attr($delivery_message) . ': </span>' . '<span class="del-text" style="color:' . $datecolor . '"><strong>' . esc_attr($estimate_delivery) . '<strong></span>' . '</div>' . '</div>';
                     }
-                
                 if ( $next_day == 'yes' ) {
                     if ( $today < 24 && $today >= $closing_time ) {
                         $estimate_delivery = date_i18n( $date_formatz, strtotime($today . ' + 2' . ' Weekday'));
                         $estimate1 = date_i18n( $date_formatz, strtotime($today . ' + 1' . ' Weekday'));
-                        
                         if ( $daterange == 'yes' ) {
                             $variations['delivery_variation'] = '<div class="estimate-delivery">' . '<div class="text-del">' . '<span class="main-text-del" style="color:' . esc_attr($color) . '">' . esc_attr($delivery_message) . ': </span>' . '<span class="del-text" style="color:' . esc_attr($datecolor) . '"><strong>' . esc_attr($estimate1) . ' - ' . esc_attr($estimate_delivery) . '<strong></span>' . '</div>' . '</div>';
                         } else {
                             $variations['delivery_variation'] = '<div class="estimate-delivery">' . '<div class="text-del">' . '<span class="main-text-del" style="color:' . esc_attr($color) . '">' . esc_attr($delivery_message) . ': </span>' . '<span class="del-text" style="color:' . esc_attr($datecolor) . '"><strong>' . esc_attr($estimate_delivery) . '<strong></span>' . '</div>' . '</div>';
                         }
-                    
-                    } elseif ( $today < $closing_time && $today > 00 ) {
+                    } 
+                    if ( $today < $closing_time && $today > 00 ) {
                         $estimate_delivery = date_i18n( $date_formatz, strtotime($today . ' + 1' . ' Weekday'));
                         $variations['delivery_variation'] = '<div class="estimate-delivery">' . '<div class="text-del">' . '<span class="main-text-del" style="color:' . esc_attr($color) . '">' . esc_attr($delivery_message) . ': </span>' . '<span class="del-text" style="color:' . esc_attr($datecolor) . '"><strong>' . esc_attr($estimate_delivery) . '<strong></span>' . '</div>' . '</div>';
                     }
-                
                 }
             }
             if ( $exclude_weekends == 'no' ) {
@@ -224,16 +207,14 @@
                         } else {
                             $variations['delivery_variation'] = '<div class="estimate-delivery">' . '<div class="text-del">' . '<span class="main-text-del" style="color:' . esc_attr($color) . '">' . esc_attr($delivery_message) . ': </span>' . '<span class="del-text" style="color:' . esc_attr($datecolor) . '"><strong>' . esc_attr($estimate_delivery) . '<strong></span>' . '</div>' . '</div>';
                         }
-                    
-                    } elseif ( $today < $closing_time && $today > 00 ) {
+                    } 
+                    if ( $today < $closing_time && $today > 00 ) {
                         $estimate_delivery = date_i18n( $date_formatz, strtotime($today . ' + 1' . ' day'));
                         $variations['delivery_variation'] = '<div class="estimate-delivery">' . '<div class="text-del">' . '<span class="main-text-del" style="color:' . esc_attr($color) . '">' . esc_attr($delivery_message) . ': </span>' . '<span class="del-text" style="color:' . esc_attr($datecolor) . '"><strong>' . esc_attr($estimate_delivery) . '<strong></span>' . '</div>' . '</div>';
                     }
                 }
-            }
-            
+            }           
             return $variations;
         }
-    } 
-    
+    }    
 	}
